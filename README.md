@@ -1,5 +1,5 @@
 Projede belirtmem gereken bazı durumlar bulunmakta. Bu durumlarla işiniz bittiğinde bu dosyayı başka amaçlar için kullanabilirsiniz.
-Öncelikle Her şey tek bir çatı altında toplandı. Bunu main.dart içerisindeki rotalara bakarak teyit edebilirsiniz. 
+Öncelikle Her şey tek bir çatı altında toplandı. Bunu main.dart içerisindeki rotalara bakarak teyit edebilirsiniz. Projesini roof klasörü altında birleşti. 
 
 1 - projeyi hiç çalıştırmadım ve test etmedim. Ama projeyi ayağa kaldırmak istediğinizde kesinlikle karşılaşacağınız bir hata varsa bu da asset hatasıdır. Herr oyunun kendisine has bir asset klasörü var ve ben de asset klasörü altında her oyun için klasörler oluşturdum. Bu yüzden de herbir oyun için asset değerlerini güncellemeniz gerekebilir. Ayriyeten pubspec.yaml dosyasıında da assets bölümünde asset klasöürünün altındaki tüm klasörleri kapsaması adına tam hatırlayamadım ama -assets/* tarzı bir şey yazmanız gerekebilir. 
 2 - Supabase bağlantıları. Şimdiden söyleyeyim eğer ki zaman yok ve bununla uğraşamam diyorsanız other_screens, supabase ve other_functions klasörlerini silmeniz ve main.dart dosyası içerisindeki '/' rotasının muhattabını değiştirmeniz,  yeterli olacaktır. eğer ki oturum açma işlemi olmazsa olmazınız ise şu işlemleri yapın : 
