@@ -34,10 +34,10 @@ Future<void> main() async {
   //.env dosyası varsa ve içinde değerler varsa bir şey yapmanıza gerek yok. Eğer .env dosyası yoksa supabase uygulamasına girin
   //supabase uygulamasında Project settings > API  içerisinde bulunan project url ve project API keys içerisinde bulunan anon ve public ile etiketlenmiş kodu kopyalayıp
   //.env dosyasına yapıştırın. Auth yani oturum açma işlemlerinin ve veritabanının yönetimi supabase üzerinden gerçekleşir. 
-  await dotenv.load();
+ 
     await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_KEY']!,   
+    url: "https://mjkqwlclzsssyufuhmft.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qa3F3bGNsenNzc3l1ZnVobWZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM5Nzg3NDMsImV4cCI6MjAzOTU1NDc0M30.g9xzfODiP5XI6heSlO7BpV8gZg97n337hQ8tJDJmsa0",   
   );
 
   runApp(const MyApp());
