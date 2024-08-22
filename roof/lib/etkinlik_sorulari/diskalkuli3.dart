@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class MathQuiz extends StatefulWidget {
   const MathQuiz({super.key});
 
@@ -25,7 +23,7 @@ class _MathQuizState extends State<MathQuiz> {
     {'left': 8, 'right': 5, 'operation': '*', 'answerPosition': 'right'},
     {'left': 9, 'right': 3, 'operation': '/', 'answerPosition': 'left'},
     {'left': 7, 'right': 5, 'operation': '*', 'answerPosition': 'left'},
-    // Add more questions as needed
+    // Daha fazla soru ekleyin
   ];
 
   @override
@@ -44,7 +42,9 @@ class _MathQuizState extends State<MathQuiz> {
 
       _question = '$leftNumber $operation $rightNumber = ?';
       _answerPosition = answerPosition;
-      _positionMessage = _answerPosition == 'left' ? 'Cevabınızı sol kutuya girin.' : 'Cevabınızı sağ kutuya girin.';
+      _positionMessage = _answerPosition == 'left'
+          ? 'Cevabınızı sol kutuya girin.'
+          : 'Cevabınızı sağ kutuya girin.';
 
       setState(() {
         _isAnswerCorrect = false;
@@ -61,18 +61,23 @@ class _MathQuizState extends State<MathQuiz> {
     final leftNumber = question['left'];
     final rightNumber = question['right'];
     final operation = question['operation'];
-    final correctAnswer = operation == '*'
-        ? leftNumber * rightNumber
-        : leftNumber ~/ rightNumber;
+    final correctAnswer =
+        operation == '*' ? leftNumber * rightNumber : leftNumber ~/ rightNumber;
 
     final leftAnswer = _leftController.text.trim();
     final rightAnswer = _rightController.text.trim();
 
-    final isLeftCorrect = leftAnswer.isNotEmpty && _answerPosition == 'left' && int.tryParse(leftAnswer) == correctAnswer;
-    final isRightCorrect = rightAnswer.isNotEmpty && _answerPosition == 'right' && int.tryParse(rightAnswer) == correctAnswer;
+    final isLeftCorrect = leftAnswer.isNotEmpty &&
+        _answerPosition == 'left' &&
+        int.tryParse(leftAnswer) == correctAnswer;
+    final isRightCorrect = rightAnswer.isNotEmpty &&
+        _answerPosition == 'right' &&
+        int.tryParse(rightAnswer) == correctAnswer;
 
-    // Ensure only one field is filled
-    final isSingleFieldFilled = (leftAnswer.isNotEmpty && rightAnswer.isEmpty) || (leftAnswer.isEmpty && rightAnswer.isNotEmpty);
+    // Sadece bir alanın dolu olduğundan emin olun
+    final isSingleFieldFilled =
+        (leftAnswer.isNotEmpty && rightAnswer.isEmpty) ||
+            (leftAnswer.isEmpty && rightAnswer.isNotEmpty);
 
     if ((isLeftCorrect || isRightCorrect) && isSingleFieldFilled) {
       setState(() {
@@ -96,143 +101,169 @@ class _MathQuizState extends State<MathQuiz> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _question,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              _positionMessage,
-              style: TextStyle(fontSize: 18, color: Colors.blue),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.pink[200],
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(2, 2),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Math Quiz'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                _question,
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                _positionMessage,
+                style: const TextStyle(fontSize: 18, color: Colors.blue),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 180, // Boyutu artırdık
+                          decoration: BoxDecoration(
+                            color: Colors.pink[200],
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 4,
+                                offset: const Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                const Text(
+                                  'Sol Cevap',
+                                  style: TextStyle(
+                                    fontSize: 22, // Yazı boyutunu artırdık
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                TextField(
+                                  controller: _leftController,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    fillColor: Colors.transparent,
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20, // Yazı boyutunu artırdık
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Sol Cevap',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          TextField(
-                            controller: _leftController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              fillColor: Colors.transparent,
-                            ),
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(color: Colors.black),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.lightBlue[200],
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(2, 2),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 180, // Boyutu artırdık
+                          decoration: BoxDecoration(
+                            color: Colors.lightBlue[200],
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 4,
+                                offset: const Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                const Text(
+                                  'Sağ Cevap',
+                                  style: TextStyle(
+                                    fontSize: 22, // Yazı boyutunu artırdık
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                TextField(
+                                  controller: _rightController,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    fillColor: Colors.transparent,
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20, // Yazı boyutunu artırdık
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Sağ Cevap',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          TextField(
-                            controller: _rightController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              fillColor: Colors.transparent,
-                            ),
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(color: Colors.black),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _checkAnswer,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellowAccent,
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                ],
               ),
-              child: Text(
-                'Cevabı Kontrol Et',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-            SizedBox(height: 20),
-            if (_isAnswerCorrect)
+              const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _nextQuestion,
+                onPressed: _checkAnswer,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.greenAccent,
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  backgroundColor: Colors.yellowAccent,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                 ),
-                child: Text(
-                  'Sonraki Soru',
+                child: const Text(
+                  'Cevabı Kontrol Et',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-            SizedBox(height: 20),
-            Text(
-              _message,
-              style: TextStyle(fontSize: 18, color: _message.contains('Tebrikler') ? Colors.green : Colors.red),
-            ),
-          ],
+              const SizedBox(height: 20),
+              if (_isAnswerCorrect)
+                ElevatedButton(
+                  onPressed: _nextQuestion,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.greenAccent,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 24),
+                  ),
+                  child: const Text(
+                    'Sonraki Soru',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              const SizedBox(height: 20),
+              Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: _message.contains('Tebrikler')
+                      ? Colors.green
+                      : Colors.red,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
