@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-
-
 class WordFillGame extends StatefulWidget {
   const WordFillGame({super.key});
 
@@ -39,7 +37,8 @@ class _WordFillGameState extends State<WordFillGame> {
       colors.add(Colors.transparent);
 
       correctLetters.add(items[i]['answer']!.split(''));
-      userLetters.add(List.filled(items[i]['answer']!.length, '')); // Boş kutucuklar için kullanıcı harfleri
+      userLetters.add(List.filled(items[i]['answer']!.length,
+          '')); // Boş kutucuklar için kullanıcı harfleri
     }
 
     // Oyun zamanlayıcısını başlat
@@ -66,7 +65,8 @@ class _WordFillGameState extends State<WordFillGame> {
   void checkAnswer(int index) {
     // Onaylama tuşuna basıldığında işlem yap
     if (!_gameOver && colors[index] == Colors.transparent) {
-      String userAnswer = userLetters[index].join('').toLowerCase().replaceAll(' ', '');
+      String userAnswer =
+          userLetters[index].join('').toLowerCase().replaceAll(' ', '');
       String correctAnswer = items[index]['answer']!.toLowerCase();
       if (userAnswer == correctAnswer) {
         colors[index] = Colors.green.withOpacity(0.3);
@@ -126,28 +126,42 @@ class _WordFillGameState extends State<WordFillGame> {
                                 runSpacing: 8.0,
                                 children: List.generate(
                                   correctLetters[index].length,
-                                      (letterIndex) {
-                                    String correctLetter = correctLetters[index][letterIndex];
+                                  (letterIndex) {
+                                    String correctLetter =
+                                        correctLetters[index][letterIndex];
                                     return DragTarget<String>(
-                                      builder: (BuildContext context, List<String?> incoming, List<dynamic> rejected) {
+                                      builder: (BuildContext context,
+                                          List<String?> incoming,
+                                          List<dynamic> rejected) {
                                         return Container(
                                           height: 50,
                                           width: 50,
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
-                                            color: colors[index] != Colors.transparent ? colors[index] : (incoming.isEmpty ? Colors.blue : Colors.blue[200]),
-                                            borderRadius: BorderRadius.circular(8.0),
+                                            color: colors[index] !=
+                                                    Colors.transparent
+                                                ? colors[index]
+                                                : (incoming.isEmpty
+                                                    ? Colors.blue
+                                                    : Colors.blue[200]),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
                                           child: Text(
                                             userLetters[index][letterIndex],
-                                            style: const TextStyle(fontSize: 24, color: Color.fromARGB(255, 255, 255, 253)),
+                                            style: const TextStyle(
+                                                fontSize: 24,
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 253)),
                                           ),
                                         );
                                       },
-                                      onWillAcceptWithDetails: (data) => true,
-                                      onAcceptWithDetails: (data) {
+                                      onWillAcceptWithDetails: (details) =>
+                                          true,
+                                      onAcceptWithDetails: (details) {
                                         setState(() {
-                                          userLetters[index][letterIndex] = data as String;
+                                          userLetters[index][letterIndex] =
+                                              details.data as String;
                                         });
                                       },
                                     );
@@ -186,7 +200,7 @@ class _WordFillGameState extends State<WordFillGame> {
               runSpacing: 8.0,
               children: List.generate(
                 alphabet.length,
-                    (index) => Draggable<String>(
+                (index) => Draggable<String>(
                   data: alphabet[index],
                   feedback: Material(
                     color: Colors.blue.withOpacity(0.7),
@@ -196,7 +210,8 @@ class _WordFillGameState extends State<WordFillGame> {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         alphabet[index],
-                        style: const TextStyle(fontSize: 24, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 24, color: Colors.white),
                       ),
                     ),
                   ),
@@ -208,7 +223,8 @@ class _WordFillGameState extends State<WordFillGame> {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         alphabet[index],
-                        style: const TextStyle(fontSize: 24, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 24, color: Colors.white),
                       ),
                     ),
                   ),
