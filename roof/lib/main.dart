@@ -23,8 +23,9 @@ import 'package:roof/giris_sorulari/gorsel_adi.dart';
 import 'package:roof/giris_sorulari/ilk_harf.dart';
 import 'package:roof/giris_sorulari/mat_hesaplama.dart';
 import 'package:roof/giris_sorulari/sayi_oyunu.dart';
-import 'package:roof/other_screens/login_screen.dart';
+import 'package:roof/other_screens/home_page.dart';
 import 'package:roof/other_screens/registiration_screen.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 // ilk_harf.dart dosyasında rotalar bulunuyor.
 // seçenekli oyuna bak. orada da main.dart var
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Teknofest Organizasyonu',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -63,9 +65,8 @@ class MyApp extends StatelessWidget {
       routes: {
 
         //oturum açma işlemlerinin yapıldığı bölüm
-        '/' : (context) => const LoginScreen(),
+        '/' : (context) => const LoginPage(),
         '/register' : (context) => const RegistrationScreen(),
-        '/login' : (context) => const LoginScreen(),
 
         //giriş sorularının bulunduğu rotalar
         'giris_sorulari/giris_harf_eslestir_disleksi': (context) => const HomePage(),

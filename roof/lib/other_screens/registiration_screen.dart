@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roof/other_screens/giris_sorulari_screen.dart';
-import 'package:roof/other_screens/login_screen.dart';
+import 'package:roof/other_screens/home_page.dart';
+
 import 'package:roof/supabase/auth.dart';
 
 
@@ -18,6 +19,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 21, 49, 73),
       appBar: AppBar(
         title: const Text('Sign Up'),
       ),
@@ -37,6 +39,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+                
                 final email = _emailController.text;
                 final password = _passwordController.text;
                 await signUp(email, password);
@@ -53,7 +56,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const LoginScreen()),
+                      builder: (context) => const LoginPage()),
                 );
               },
               child: const Text('Already have an account? Login'),
