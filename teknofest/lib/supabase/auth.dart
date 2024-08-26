@@ -1,19 +1,24 @@
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:teknofest/main.dart';
+import 'package:teknofest/screens/MessageHandler.dart';
 
-Future<void> signUp(String email, String password) async {
+Future<Result<String>> signUp(String email, String password) async {
   try {
-    await supabase.auth.signUp(email: email, password: password);
+    await Supabase.instance.client.auth.signUp(email: email, password: password);
+    return Result();
   } catch (e) {
-    print('Sign up error: $e');
+    return Result(error: e.toString());
   }
 }
 
-Future<void> signIn(String email, String password) async {
+Future<Result<String>> signIn(String email, String password) async {
   try {
     await supabase.auth.signInWithPassword(email: email, password: password);
+    return Result();
   } catch (e) {
-    print('Sign in error: $e');
+    return Result(error: e.toString());
   }
 }
 
@@ -24,3 +29,5 @@ Future<void> signOut() async {
     print('Sign out error: $e');
   }
 }
+
+

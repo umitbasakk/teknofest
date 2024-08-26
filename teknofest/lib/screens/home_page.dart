@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:teknofest/screens/MessageHandler.dart';
 import 'package:teknofest/screens/etkinlik_sorulari_screen.dart';
+import 'package:teknofest/screens/giris_sorulari_screen.dart';
 import 'package:teknofest/screens/registiration_screen.dart';
+import 'package:teknofest/supabase/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,7 +17,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true; // Şifrenin görünürlüğünü kontrol eden değişken
-
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -60,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       customSizedBox(),
                       TextField(
+                        controller: _emailController,
                         decoration: customInputDecaration("Kullanıcı Adı"),
                         textAlign: TextAlign.center,
                         style: textfieldStyle(),
@@ -67,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                       customSizedBox(),
                       TextField(
                         obscureText: _isObscure,
+                        controller: _passwordController,
                         textAlign: TextAlign.center,
                         decoration: customInputDecaration("Şifre").copyWith(
                           suffixIcon: buttonOfHide(),
@@ -88,11 +96,24 @@ class _LoginPageState extends State<LoginPage> {
                       customSizedBox(),
                       Center(
                         child: TextButton(
-                           onPressed: () {
-                            Navigator.push(
-                            context,
-                             CupertinoPageRoute(builder: (context) => EtkinlikSorulariListScreen()),
-                              );
+                           onPressed: () async{
+                            final email = _emailController.text;
+                            final password = _passwordController.text;
+                            Result<String> result =  await signIn(email, password);
+                            if (result.error != null) {
+                              ResultHandler(context, ContentType.failure,"Oh Snap!", result.error!);
+                            } else {
+                              ResultHandler(context, ContentType.success,"Success!", "Başarıyla giriş yaptınız. Yönlendiriliyorsunuz...");
+                              Future.delayed(Duration(seconds: 4),()=>{
+                                    Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const GirisSorulariScreen(),
+                                  ),
+                                )
+                              });
+                    
+                              }
                               },
                           child: Container(
                             height: 50,
